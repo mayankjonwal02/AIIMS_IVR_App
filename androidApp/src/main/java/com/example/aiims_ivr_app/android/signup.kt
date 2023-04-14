@@ -19,13 +19,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 
 @Composable
-fun SignUp() {
+fun SignUp(navcontroller: NavHostController,user:String?="Hospital") {
     Surface(color = Color.White) {
         Column(
             modifier = Modifier
@@ -48,7 +48,11 @@ fun SignUp() {
                     textAlign = TextAlign.Center
                 )
             )
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(text = "as $user", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(), style = TextStyle(fontFamily = FontFamily.Monospace, fontStyle = FontStyle.Normal, textAlign = TextAlign.Center))
+            Spacer(modifier = Modifier.height(70.dp))
             Card(
                 modifier = Modifier.fillMaxWidth(0.8f),
                 shape = RoundedCornerShape(20.dp),

@@ -1,6 +1,7 @@
 package com.example.aiims_ivr_app.android
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,10 +21,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.aiims_ivr_app.android.navigation.screen
 
-@Preview
+
 @Composable
-fun signinas(heading:String = "Using App as") {
+fun signinas(navController: NavController,heading:String = "Using App as") {
     
     Box(modifier = Modifier
         .fillMaxSize()
@@ -50,10 +53,13 @@ fun signinas(heading:String = "Using App as") {
                 .shadow(
                     40.dp,
                     RoundedCornerShape(20.dp), spotColor = Color.Red
-                ), shape = RoundedCornerShape(20.dp)
+                )
+                , shape = RoundedCornerShape(20.dp)
             ) {
                 
-                Text(text = "Organisation", modifier = Modifier.padding(30.dp), style = TextStyle(fontStyle = FontStyle.Normal, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, fontSize = 30.sp, textAlign = TextAlign.Center))
+                Text(text = "Organisation", modifier = Modifier.padding(30.dp).clickable{
+                    navController.navigate("${screen.signin.route}/${"Organisation"}")
+                }, style = TextStyle(fontStyle = FontStyle.Normal, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, fontSize = 30.sp, textAlign = TextAlign.Center))
                 
             }
             Spacer(modifier = Modifier.height(30.dp))
@@ -66,7 +72,9 @@ fun signinas(heading:String = "Using App as") {
                 ), shape = RoundedCornerShape(20.dp)
             ) {
 
-                Text(text = "Nurse", modifier = Modifier.padding(30.dp), style = TextStyle(fontStyle = FontStyle.Normal, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, fontSize = 30.sp, textAlign = TextAlign.Center))
+                Text(text = "Nurse", modifier = Modifier.padding(30.dp).clickable{
+                    navController.navigate("${screen.signin.route}/${"Nurse"}")
+                }, style = TextStyle(fontStyle = FontStyle.Normal, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, fontSize = 30.sp, textAlign = TextAlign.Center))
 
             }
             Spacer(modifier = Modifier.height(30.dp))
@@ -79,7 +87,9 @@ fun signinas(heading:String = "Using App as") {
                 ), shape = RoundedCornerShape(20.dp)
             ) {
 
-                Text(text = "Audio App", modifier = Modifier.padding(30.dp), style = TextStyle(fontStyle = FontStyle.Normal, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, fontSize = 30.sp, textAlign = TextAlign.Center))
+                Text(text = "Audio App", modifier = Modifier.padding(30.dp).clickable{
+                    navController.navigate("${screen.signin.route}/${"Audio App"}")
+                }, style = TextStyle(fontStyle = FontStyle.Normal, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, fontSize = 30.sp, textAlign = TextAlign.Center))
 
             }
             

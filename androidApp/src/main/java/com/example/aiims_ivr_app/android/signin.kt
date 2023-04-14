@@ -1,6 +1,6 @@
 package com.example.aiims_ivr_app.android
 
-import android.graphics.Paint.Align
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,32 +23,64 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-@Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import com.example.aiims_ivr_app.android.navigation.screen
+
+
 @Composable
-fun SignIn() {
+fun SignIn(navcontroller: NavController,user : String? = "Hospital") {
     Surface(color = Color.White) {
 
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Spacer(modifier = Modifier.height(40.dp))
-            Text(text = "Sign In", fontSize = 60.sp, fontWeight = FontWeight.ExtraBold, modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(), style = TextStyle(fontFamily = FontFamily.Cursive, fontStyle = FontStyle.Normal, textAlign = TextAlign.Center))
-            Spacer(modifier = Modifier.height(100.dp))
+            Text(
+                text = "Sign In",
+                fontSize = 60.sp,
+                fontWeight = FontWeight.ExtraBold,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                style = TextStyle(
+                    fontFamily = FontFamily.Cursive,
+                    fontStyle = FontStyle.Normal,
+                    textAlign = TextAlign.Center
+                )
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "as $user",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.ExtraBold,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                style = TextStyle(
+                    fontFamily = FontFamily.Monospace,
+                    fontStyle = FontStyle.Normal,
+                    textAlign = TextAlign.Center
+                )
+            )
+            Spacer(modifier = Modifier.height(70.dp))
             Card(
-                modifier = Modifier.fillMaxWidth(0.8f),shape = RoundedCornerShape(20.dp),
+                modifier = Modifier.fillMaxWidth(0.8f), shape = RoundedCornerShape(20.dp),
                 backgroundColor = Color(0xFFFFC0CB),
                 elevation = 8.dp,
 
-            ) {
+                ) {
                 var passwordVisible by remember { mutableStateOf(false) }
 
-                Column(modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
                     Spacer(modifier = Modifier.height(30.dp))
                     OutlinedTextField(
@@ -84,19 +116,46 @@ fun SignIn() {
                             }
                         }
                     )
+                    var route: String? = screen.signin.route
                     Spacer(modifier = Modifier.height(50.dp))
+                    if (user == "Organisation")
+                    {
+                        route = screen.callsetup.route
+                    }
+                    else if( user =="Nurse")
+                    {
+                        route = screen.patientdata.route
+                    }
+                    else if( user == "Audio App")
+                    {
+                        route = screen.audiosetup.route
+                    }
 
-                    Button(onClick = { /* Handle sign-in */ }, modifier = Modifier
-                        .wrapContentWidth()
+                    Button(
+                        onClick = { if (route != null) {
+                            navcontroller.navigate(route)
+                        } },
+                        modifier = Modifier
+                            .wrapContentWidth()
 
-                        .padding(top = 16.dp),
+                            .padding(top = 16.dp)
+                            ,
                     ) {
                         Text(text = "Sign In")
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(text = "Not Registered Yet ? Sign up", color = Color.Blue, fontWeight = FontWeight.Bold)
+
+            if (user != "Nurse") {
+                Spacer(modifier = Modifier.height(20.dp))
+                Text(
+                    text = "Not Registered Yet ? Sign up",
+                    color = Color.Blue,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.clickable {
+                        navcontroller.navigate("${screen.signup.route}/$user")
+                    })
+            }
         }
     }
 }

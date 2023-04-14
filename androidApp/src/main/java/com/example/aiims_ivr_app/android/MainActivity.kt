@@ -8,11 +8,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.aiims_ivr_app.Greeting
-import com.example.aiims_ivr_app.android.AUDIO_UI.audiosetup
-import com.example.aiims_ivr_app.android.Call_UI.callsetup
-import com.example.aiims_ivr_app.android.NURSE.addnurse
-import com.example.aiims_ivr_app.android.NURSE.patientdata
+import androidx.navigation.compose.rememberNavController
+import com.example.aiims_ivr_app.android.navigation.navgraph
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,8 +20,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    callsetup()
-                }
+                   var navController = rememberNavController()
+                    navgraph(navcontroller = navController)
+
+             }
             }
         }
     }
