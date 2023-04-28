@@ -1,5 +1,7 @@
 package com.example.aiims_ivr_app.android
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -20,16 +22,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.aiims_ivr_app.android.navigation.screen
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.*
 
 
 @Composable
-fun SignIn(navcontroller: NavController,user : String? = "Hospital") {
+fun SignIn(navcontroller: NavController, user: String? = "Hospital", context: Context) {
+
+    var scaffoldState = rememberScaffoldState()
+    var auth: FirebaseAuth
+    auth = FirebaseAuth.getInstance()
+    var email by remember {
+        mutableStateOf("")
+    }
+    var password by remember {
+        mutableStateOf("")
+    }
     Surface(color = Color.White) {
 
         Column(
@@ -84,8 +96,8 @@ fun SignIn(navcontroller: NavController,user : String? = "Hospital") {
 
                     Spacer(modifier = Modifier.height(30.dp))
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
+                        value = email,
+                        onValueChange = { email = it },
                         label = { Text(text = "Email") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -98,8 +110,8 @@ fun SignIn(navcontroller: NavController,user : String? = "Hospital") {
                     var passwordVisibility by remember { mutableStateOf(false) }
 
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
+                        value = password,
+                        onValueChange = { password = it },
                         label = { Text(text = "Password") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -118,28 +130,43 @@ fun SignIn(navcontroller: NavController,user : String? = "Hospital") {
                     )
                     var route: String? = screen.signin.route
                     Spacer(modifier = Modifier.height(50.dp))
-                    if (user == "Organisation")
-                    {
+                    if (user == "Organisation") {
                         route = screen.callsetup.route
-                    }
-                    else if( user =="Nurse")
-                    {
+                    } else if (user == "Nurse") {
                         route = screen.patientdata.route
-                    }
-                    else if( user == "Audio App")
-                    {
+                    } else if (user == "Audio App") {
                         route = screen.audiosetup.route
                     }
 
                     Button(
-                        onClick = { if (route != null) {
-                            navcontroller.navigate(route)
-                        } },
+                        onClick = {
+                            if (email.isNotBlank() && password.isNotBlank()) {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    firebasesignin(email, password, context,navcontroller,user)
+
+                                }
+
+                            } else {
+
+                                Toast.makeText(context," Fields Empty",Toast.LENGTH_LONG).show()
+
+                            }
+
+//                                  auth.signInWithEmailAndPassword(email,password).addOnCompleteListener { it -> if(it.isSuccessful)
+//                                  {
+//                                      Toast.makeText(context,"Logined Successfully",Toast.LENGTH_LONG).show()
+//                                  }
+//                                  else
+//                                  {
+//                                      Toast.makeText(context,"Error",Toast.LENGTH_LONG).show()
+//                                  }}
+
+
+                        },
                         modifier = Modifier
                             .wrapContentWidth()
 
-                            .padding(top = 16.dp)
-                            ,
+                            .padding(top = 16.dp),
                     ) {
                         Text(text = "Sign In")
                     }

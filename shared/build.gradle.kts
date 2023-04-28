@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("com.google.gms.google-services")
 }
 
 kotlin {
@@ -53,10 +54,23 @@ kotlin {
 }
 
 android {
-    namespace = "com.example.aiims_ivr_app"
+
+
+    namespace = "com.example.aiims_ivr_app.android"
     compileSdk = 33
     defaultConfig {
         minSdk = 24
         targetSdk = 33
     }
+}
+dependencies {
+
+    implementation("com.google.firebase:firebase-auth-ktx:21.0.3")
+    implementation("com.google.firebase:firebase-auth:21.3.0")
+    implementation("com.google.firebase:firebase-database:20.2.0")
+//    implementation ("com.google.firebase:firebase-database-ktx:20.0.0")
+    implementation( "androidx.compose.material:material:1.3.1")
+    implementation ("com.google.accompanist:accompanist-permissions:0.21.1-beta")
+
+
 }

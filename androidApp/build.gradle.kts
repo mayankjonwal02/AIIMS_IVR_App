@@ -1,9 +1,12 @@
 plugins {
-    id("com.android.application")
+    id("com.android.application" )
     kotlin("android")
+    id("com.google.gms.google-services")
 }
 
 android {
+
+
     namespace = "com.example.aiims_ivr_app.android"
     compileSdk = 33
     defaultConfig {
@@ -49,6 +52,11 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.6.1")
 
     implementation ("androidx.compose.material:material-icons-extended:1.4.0")
+    implementation("com.google.firebase:firebase-auth-ktx:21.0.3")
+    implementation("com.google.firebase:firebase-auth:21.3.0")
+    implementation("com.google.firebase:firebase-database:20.2.0")
+//    implementation ("com.google.firebase:firebase-database-ktx:20.0.0")
+
 
     //navigation
     var nav_version = "2.5.3"
@@ -56,4 +64,9 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     // Jetpack Compose Integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation( "androidx.compose.material:material:1.3.1")
+    implementation ("com.google.accompanist:accompanist-permissions:0.21.1-beta")
+
+
+
 }

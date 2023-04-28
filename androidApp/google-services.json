@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1058017992561",
+    "firebase_url": "https://aiims-ivr-app-default-rtdb.firebaseio.com",
+    "project_id": "aiims-ivr-app",
+    "storage_bucket": "aiims-ivr-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058017992561:android:a8f94efe4b14a9b23f20d0",
+        "android_client_info": {
+          "package_name": "com.example.aiims_ivr_app.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058017992561-2vl24gg9q3i41eeupg1j332bp20ss8i7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTEWFPLB4ILaJ2cXkefhI4LBwoOMjAAfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1058017992561-2vl24gg9q3i41eeupg1j332bp20ss8i7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

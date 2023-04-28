@@ -1,5 +1,7 @@
 package com.example.aiims_ivr_app.android
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,10 +24,36 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun SignUp(navcontroller: NavHostController,user:String?="Hospital") {
+fun SignUp(navcontroller: NavHostController, user: String? = "Hospital", context: Context) {
+
+    var name by remember {
+        mutableStateOf("")
+    }
+
+    var email by remember {
+        mutableStateOf("")
+    }
+
+    var password by remember {
+        mutableStateOf("")
+    }
+
+    var confirmpassword by remember {
+        mutableStateOf("")
+    }
+
+    var auth: FirebaseAuth
+
+    auth = FirebaseAuth.getInstance()
+
+
     Surface(color = Color.White) {
         Column(
             modifier = Modifier
@@ -49,9 +77,19 @@ fun SignUp(navcontroller: NavHostController,user:String?="Hospital") {
                 )
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "as $user", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(), style = TextStyle(fontFamily = FontFamily.Monospace, fontStyle = FontStyle.Normal, textAlign = TextAlign.Center))
+            Text(
+                text = "as $user",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.ExtraBold,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                style = TextStyle(
+                    fontFamily = FontFamily.Monospace,
+                    fontStyle = FontStyle.Normal,
+                    textAlign = TextAlign.Center
+                )
+            )
             Spacer(modifier = Modifier.height(70.dp))
             Card(
                 modifier = Modifier.fillMaxWidth(0.8f),
@@ -73,8 +111,8 @@ fun SignUp(navcontroller: NavHostController,user:String?="Hospital") {
                     Spacer(modifier = Modifier.height(30.dp))
 
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
+                        value = name,
+                        onValueChange = { name = it },
                         label = { Text(text = "Name") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -85,8 +123,8 @@ fun SignUp(navcontroller: NavHostController,user:String?="Hospital") {
                     Spacer(modifier = Modifier.height(30.dp))
 
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
+                        value = email,
+                        onValueChange = { email = it },
                         label = { Text(text = "Email") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -97,8 +135,8 @@ fun SignUp(navcontroller: NavHostController,user:String?="Hospital") {
                     Spacer(modifier = Modifier.height(30.dp))
 
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
+                        value = password,
+                        onValueChange = { password = it },
                         label = { Text(text = "Password") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -118,8 +156,8 @@ fun SignUp(navcontroller: NavHostController,user:String?="Hospital") {
                     Spacer(modifier = Modifier.height(30.dp))
 
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
+                        value = confirmpassword,
+                        onValueChange = { confirmpassword = it },
                         label = { Text(text = "Confirm Password") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -139,14 +177,34 @@ fun SignUp(navcontroller: NavHostController,user:String?="Hospital") {
                         }
                     )
                     Spacer(modifier = Modifier.height(30.dp))
-                    Button(onClick = { /*TODO*/ }) { Text(text = "Sign Up") }
-                    
+                    Button(onClick = {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            auth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Toast.makeText(
+                                            context,
+                                            "Account created succesfully",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+
+                                    } else {
+                                        Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                                    }
+                                }
+                        }
+                    }) { Text(text = "Sign Up") }
+
                 }
             }
             Spacer(modifier = Modifier.height(20.dp))
-            Text(text = "Already have an account? Sign in", color = Color.Blue, fontWeight = FontWeight.Bold)
+            Text(
+                text = "Already have an account? Sign in",
+                color = Color.Blue,
+                fontWeight = FontWeight.Bold
+            )
         }
 
     }
-    }
+}
 

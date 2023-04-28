@@ -8,6 +8,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AppRegistration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -47,7 +49,7 @@ fun splashscreen(navcontroller: NavHostController) {
         .fillMaxSize()
         .background(Color.White))
     {
-        Image(painter = painterResource(id = R.drawable.hospital), contentDescription ="hospital" , modifier = Modifier.scale(scale.value))
+        Image(painter = painterResource(id = com.example.aiims_ivr_app.android.R.drawable.hospital), contentDescription ="hospital" , modifier = Modifier.scale(scale.value))
     }
     
 }
