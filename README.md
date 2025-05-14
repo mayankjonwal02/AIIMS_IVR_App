@@ -22,31 +22,13 @@ An intelligent **Interactive Voice Response (IVR)** system built using **Kotlin 
 |------------|---------------------|
 | Frontend   | Kotlin + Jetpack Compose |
 | Background Tasks | WorkManager, AlarmManager |
-| Bluetooth  | HC-05 module support |
-| Backend    | PHP + MySQL (XAMPP) |
+| Backend    | ExpressJS + MySQL (XAMPP) |
 | Storage    | Room Database or SharedPreferences |
 | API Client | Retrofit |
 
 ---
 
-## 📁 Project Structure
 
-```
-
-ivr-app/
-├── ui/                         # Jetpack Compose screens
-│   └── MainScreen.kt
-├── bluetooth/                 # HC-05 communication logic
-│   └── BluetoothViewModel.kt
-├── service/                   # Call handling and WorkManager
-│   └── AutoCallService.kt
-├── data/
-│   └── LocalDB.kt
-├── network/                   # Retrofit interfaces
-│   └── ApiService.kt
-└── MainActivity.kt
-
-```
 
 ---
 
